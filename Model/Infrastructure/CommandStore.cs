@@ -15,9 +15,9 @@ namespace Model.Infrastructure
         public static string DatabasePath { get; set; }
         private static string DatabaseFilePath => Path.Combine(DatabasePath, "store.db");
 
-        public static void AppendToStream(string streamId, CompetenceUpdateCommand command)
+        public static void AppendToStream(string streamId, CompetenceUpdateCommand command, string commandType)
         {
-            var envelope = new CommandEnvelope(streamId, command);
+            var envelope = new CommandEnvelope(streamId, command, commandType);
             var json = JsonConvert.SerializeObject(envelope);
 
             lock (SyncRoot)
@@ -32,7 +32,14 @@ namespace Model.Infrastructure
             string[] lines;
             lock (SyncRoot)
             {
-               lines = File.ReadAllLines(DatabaseFilePath);
+                try
+                {
+                    lines = File.ReadAllLines(DatabaseFilePath);
+                }
+                catch (FileNotFoundException)
+                {
+                    yield break;
+                }
             }
 
             foreach (var line in lines)
@@ -63,12 +70,12 @@ namespace Model.Infrastructure
 
         [JsonProperty(PropertyName = "command")] public object Command;
 
-        public CommandEnvelope(string streamId, object command)
+        public CommandEnvelope(string streamId, object command, string commandType)
         {
             StreamId = streamId;
             Created = DateTime.Now;
             Command = command;
-            CommandType = command.GetType().FullName;
+            CommandType = commandType;
         }
 
         public T GetCommand<T>()
