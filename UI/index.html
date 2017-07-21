@@ -8,6 +8,35 @@
 
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.0/js/materialize.min.js"></script>
+<script type="text/x-template" id="Profile">
+    <div>
+        <div class="card-panel">
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea v-model="message" class="materialize-textarea"></textarea>
+                            <label for="textarea1">About me</label>
+                        </div>
+                        <div class="col s12">
+                            <a class="waves-effect waves-light btn-large" v-on:click="update"><i class="material-icons left">save</i>Save</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">My competences</span>
+                <div>
+                    <div v-for="item in competences" class="chip">{{item.text}}<i class="close material-icons">close</i></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
 
 <body>
     <div id="app" class="container">
@@ -15,25 +44,13 @@
             <div class="nav-wrapper">
                 <a href="#" class="brand-logo right">Logo</a>
                 <ul id="nav-mobile" class="left hide-on-med-and-down">
-                    <li><a href="sass.html">My profile</a></li>
-                    <li><a href="badges.html">Search</a></li>
-                    <li><a href="collapsible.html">Aggregations</a></li>
+                    <li><a href="#">My profile</a></li>
+                    <li><a href="#">Search</a></li>
+                    <li><a href="#">Aggregations</a></li>
                 </ul>
             </div>
         </nav>
-        <div class="row">
-            <form class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <textarea v-model="message" class="materialize-textarea"></textarea>
-                        <label for="textarea1">About me</label>
-                    </div>
-                    <div class="col s12">
-                        <a class="waves-effect waves-light btn-large" v-on:click="update"><i class="material-icons left">save</i>Save</a>
-                    </div>
-                </div>
-            </form>
-        </div>
+        <profile></profile>
 
     </div>
     <script src="app.js"></script>
