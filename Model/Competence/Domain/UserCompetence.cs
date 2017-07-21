@@ -23,6 +23,17 @@ namespace Model.Competence.Domain
             this.state = state;
         }
 
+        public string CompetenceText => state.compentenceText;
+
+        public string[] CompetenceList
+        {
+            get
+            {
+                var parser = new UserCompetenceParser();
+                return parser.ParseCompetenceText(CompetenceText);
+            }
+        }
+
         public string GetId()
         {
             return this.state.Id;

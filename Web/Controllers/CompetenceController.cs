@@ -16,10 +16,13 @@ namespace Web.Controllers
         // GET api/competence/{id}
         public UserCompetenceGetModel Get(string id)
         {
+            var repo = new UserCompetenceRepository();
+            var entity = repo.Get(id);
+            
             return new UserCompetenceGetModel
             {
-                CompetenceText = "tekst #kompetencja1 #kompetencja2",
-                Competencies = new[] {"kompetencja1", "kompetencja2"}
+                CompetenceText = entity.CompetenceText,
+                Competencies = entity.CompetenceList
             };
         }
 
