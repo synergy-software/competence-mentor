@@ -13,8 +13,9 @@ namespace Model.Competence.Infrastructure
         public void Store(UserCompetence aggregate, CompetenceUpdateCommand command)
         {
             StoreInLocalStorage(aggregate, command);
-
-            //tutaj
+            
+            // todo faktory
+            new ChartManager().UserCompetenceIncrease(aggregate, command);
         }
 
         private static void StoreInLocalStorage(UserCompetence aggregate, CompetenceUpdateCommand command)
