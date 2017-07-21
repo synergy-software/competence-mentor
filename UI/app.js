@@ -87,7 +87,7 @@ Vue.component('search', {
     search:function(){
       var that = this;
       $.ajax({
-        url: apiRoot+"competence/search?compentence="+this.term,
+        url: apiRoot+"competence/search?compentence="+encodeURIComponent(this.term),
         method:"GET",
         contentType:'application/json',
         
@@ -147,6 +147,7 @@ Vue.component('profile', {
           data.Competencies.forEach(function(el){
             that.competences.push({text:el});
           });
+         
       });
     }
   }
