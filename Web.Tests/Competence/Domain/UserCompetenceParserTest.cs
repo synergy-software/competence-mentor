@@ -16,7 +16,23 @@ namespace Web.Tests.Competence.Domain
         {
             var parser = new UserCompetenceParser();
             var result = parser.ParseCompetenceText("#kompetence1");
-            Assert.AreEqual(result.Single(), "#kompetence1");
+            Assert.AreEqual(result.Single(), "kompetence1");
+        }
+
+        [TestMethod]
+        public void Many()
+        {
+            var parser = new UserCompetenceParser();
+            var result = parser.ParseCompetenceText("To jest #kompetence1 #parser #c# #.net @con=][p0");
+            CollectionAssert.AreEquivalent(result, new string[] { "kompetence1", "parser", "c#", ".net" });
+        }
+
+        [TestMethod]
+        public void Invalid()
+        {
+            var parser = new UserCompetenceParser();
+            var result = parser.ParseCompetenceText("#");
+            Assert.IsTrue(result.Length == 0);
         }
     }
 }
