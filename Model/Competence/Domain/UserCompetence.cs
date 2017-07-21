@@ -21,7 +21,7 @@ namespace Model.Competence.Domain
         {
             // todo parse
             state.Apply(command);
-            userCompentencePersister.Store(command);
+            userCompentencePersister.Store(this, command);
         }
 
         public string GetCompetenceText()
