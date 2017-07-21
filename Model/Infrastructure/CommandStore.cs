@@ -1,32 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Model.Competence.Domain;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Model.Infrastructure
 {
+    // TODO: Przyspiesz wydajność zapisując w pamięci kopertki a plik jest tylko backup storem (wykorzystywanym przy podniesieniu aplikacji)
+
     public static class CommandStore
     {
         private static readonly object SyncRoot = new object();
         public static string DatabasePath { get; set; }
+        private static string DatabaseFilePath => Path.Combine(DatabasePath, "store.db");
 
-        public static void Store(UserCompetence aggregate, CompetenceUpdateCommand command)
+        public static void Store(string streamId, CompetenceUpdateCommand command)
         {
-            var aggregateId = aggregate.GetId();
-            var envelope = new CommandEnvelope(aggregateId, command);
-
+            var envelope = new CommandEnvelope(streamId, command);
             var json = JsonConvert.SerializeObject(envelope);
-            var o = JsonConvert.DeserializeObject<CommandEnvelope>(json);
-            //var c = ((JObject) o.Command).ToObject(typeof(CompentenceUpdateCommand));
 
             lock (SyncRoot)
             {
-                var storageFile = Path.Combine(DatabasePath, "store.db");
+                var storageFile = DatabaseFilePath;
                 File.AppendAllLines(storageFile, new[] {json});
             }
         }
 
+        public static IEnumerable<CommandEnvelope> ReadAll()
+        {
+            string[] lines;
+            lock (SyncRoot)
+            {
+               lines = File.ReadAllLines(DatabaseFilePath);
+            }
 
+            foreach (var line in lines)
+            {
+                var envelope = JsonConvert.DeserializeObject<CommandEnvelope>(line);
+                yield return envelope;
+                //var c = ;
+            }
+        }
+
+        public static IEnumerable<CommandEnvelope> ReadFor(string streamId)
+        {
+            foreach (var envelope in ReadAll())
+            {
+                if (envelope.StreamId == streamId)
+                    yield return envelope;
+            }
+        }
     }
 
     public class CommandEnvelope
@@ -45,6 +69,12 @@ namespace Model.Infrastructure
             Created = DateTime.Now;
             Command = command;
             CommandType = command.GetType().FullName;
+        }
+
+        public T GetCommand<T>()
+        {
+            var jObject = (JObject) Command;
+            return (T) jObject.ToObject(typeof(T));
         }
     }
 }

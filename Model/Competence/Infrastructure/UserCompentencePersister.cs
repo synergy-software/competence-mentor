@@ -10,7 +10,7 @@ namespace Model.Competence.Infrastructure
     {
         public void Store(UserCompetence aggregate, CompetenceUpdateCommand command)
         {
-            CommandStore.Store(aggregate, command);
+            CommandStore.Store(aggregate.GetId(), command);
 
             //tutaj
         }

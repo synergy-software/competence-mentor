@@ -14,7 +14,13 @@ namespace Model.Competence.Domain
         public UserCompetence(string userId, IUserCompentencePersister userCompentencePersister)
         {
             this.userCompentencePersister = userCompentencePersister;
-            state = new State(userId);
+            this.state = new State(userId);
+        }
+
+        internal UserCompetence(State state, IUserCompentencePersister userCompentencePersister)
+        {
+            this.userCompentencePersister = userCompentencePersister;
+            this.state = state;
         }
 
         public string GetId()
