@@ -12,7 +12,7 @@ namespace Web.Tests.Competence.Domain
         {
             var repository = new UserCompetenceRepository();
             var entity = repository.Get("user1");
-            entity.UpdateCompentence( new CompentenceUpdateCommand
+            entity.UpdateCompentence( new CompetenceUpdateCommand
             {
                 CompentenceText = "lala"
             

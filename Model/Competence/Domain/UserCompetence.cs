@@ -22,7 +22,7 @@ namespace Model.Competence.Domain
             return this.state.Id;
         }
 
-        public void UpdateCompentence(CompentenceUpdateCommand command)
+        public void UpdateCompentence(CompetenceUpdateCommand command)
         {
             // todo parse
             state.Apply(command);
@@ -45,14 +45,14 @@ namespace Model.Competence.Domain
                 compentenceText = "";
             }
 
-            public void Apply(CompentenceUpdateCommand command)
+            public void Apply(CompetenceUpdateCommand command)
             {
                 compentenceText = command.CompentenceText;
             }
         }
     }
 
-    public class CompentenceUpdateCommand
+    public class CompetenceUpdateCommand
     {
         public string CompentenceText { get; set; }
     }
