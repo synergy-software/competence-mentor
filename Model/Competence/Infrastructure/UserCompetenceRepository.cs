@@ -8,7 +8,7 @@ namespace Model.Competence.Infrastructure
         public UserCompetence Get(string userId)
         {
             var persister = new UserCompentencePersister();
-            var commands = CommandStore.ReadFor(userId);
+            var commands = CommandStore.ReadFromStream(userId);
             var state = new UserCompetence.State(userId);
             foreach (var commandEnvelope in commands)
             {

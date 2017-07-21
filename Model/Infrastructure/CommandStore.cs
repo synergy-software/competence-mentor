@@ -15,7 +15,7 @@ namespace Model.Infrastructure
         public static string DatabasePath { get; set; }
         private static string DatabaseFilePath => Path.Combine(DatabasePath, "store.db");
 
-        public static void Store(string streamId, CompetenceUpdateCommand command)
+        public static void AppendToStream(string streamId, CompetenceUpdateCommand command)
         {
             var envelope = new CommandEnvelope(streamId, command);
             var json = JsonConvert.SerializeObject(envelope);
@@ -43,7 +43,7 @@ namespace Model.Infrastructure
             }
         }
 
-        public static IEnumerable<CommandEnvelope> ReadFor(string streamId)
+        public static IEnumerable<CommandEnvelope> ReadFromStream(string streamId)
         {
             foreach (var envelope in ReadAll())
             {
