@@ -12,18 +12,22 @@ namespace Web.Controllers
     public class CompetenceController : ApiController
     {
         // GET api/competence/{id}
-        public string Get(string id)
+        public UserCompetenceGetModel Get(string id)
         {
-            return "tekst #kompetencja1";
+            return new UserCompetenceGetModel
+            {
+                CompetenceText = "tekst #kompetencja1 #kompetencja2",
+                Competencies = new[] {"#kompetencja1 #kompetencja2"}
+            };
         }
 
         
         // POST api/competence
-        public void Post(UserCompetenceModel model)
+        public void Post(UserCompetenceUpdateModel updateModel)
         {
             var repo = new UserCompetenceRepository();
-            var entity = repo.Get(model.UserId);
-            var command = new CompetenceUpdateCommand {CompentenceText = model.CompetenceText};
+            var entity = repo.Get(updateModel.UserId);
+            var command = new CompetenceUpdateCommand {CompentenceText = updateModel.CompetenceText};
             entity.UpdateCompentence(command);
         }
 
@@ -34,9 +38,16 @@ namespace Web.Controllers
 
     }
 
-    public class UserCompetenceModel
+    public class UserCompetenceUpdateModel
     {
         public string UserId;
         public string CompetenceText;
+    }
+
+    public class UserCompetenceGetModel
+    {
+        //public string UserId;
+        public string CompetenceText;
+        public string[] Competencies;
     }
 }
