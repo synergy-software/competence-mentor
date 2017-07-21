@@ -9,7 +9,7 @@ namespace Model.Competence.Domain
     public class UserCompetence
     {
         private readonly IUserCompentencePersister userCompentencePersister;
-        private State state;
+        private readonly State state;
 
         public UserCompetence(string userId, IUserCompentencePersister userCompentencePersister)
         {
@@ -17,11 +17,16 @@ namespace Model.Competence.Domain
             state = new State(userId);
         }
 
+        public string GetId()
+        {
+            return this.state.Id;
+        }
+
         public void UpdateCompentence(CompentenceUpdateCommand command)
         {
             // todo parse
             state.Apply(command);
-            userCompentencePersister.Store(command);
+            userCompentencePersister.Store(this, command);
         }
 
         public string GetCompetenceText()
@@ -31,7 +36,7 @@ namespace Model.Competence.Domain
 
         internal class State
         {
-            public string Id;
+            public readonly string Id;
             public string compentenceText;
 
             public State(string userId)
