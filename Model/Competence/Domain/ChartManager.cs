@@ -63,6 +63,14 @@ namespace Model.Competence.Domain
                 userCompetencies.Clear();
             }
         }
+
+        public string[] Search(string compentence)
+        {
+            List<string> list;
+            if (userCompetencies.TryGetValue(compentence, out list))
+                return list.ToArray();
+            return new string[] {};
+        }
     }
 
     public class CompetenceSummary

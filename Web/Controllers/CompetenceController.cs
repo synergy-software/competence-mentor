@@ -45,6 +45,13 @@ namespace Web.Controllers
             return ChartFactory.Get().GetStatistics();
         }
 
+
+        [Route("api/competence/search/")]
+        [HttpGet]
+        public string[] Search(string compentence)
+        {
+            return ChartFactory.Get().Search(compentence);
+        }
     }
 
     public class UserCompetenceUpdateModel
