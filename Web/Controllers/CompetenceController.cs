@@ -4,11 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Model.Competence.Domain;
 using Model.Competence.Infrastructure;
 
 namespace Web.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CompetenceController : ApiController
     {
         // GET api/competence/{id}
