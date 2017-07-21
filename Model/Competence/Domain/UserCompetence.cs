@@ -43,6 +43,7 @@ namespace Model.Competence.Domain
         {
             var parser = new UserCompetenceParser();
             command.Competencies = parser.ParseCompetenceText(command.CompentenceText);
+            command.UserId = GetId();
             state.Apply(command);
             userCompentencePersister.Store(this, command);
         }
@@ -67,6 +68,7 @@ namespace Model.Competence.Domain
 
     public class CompetenceUpdateCommand
     {
+        public string UserId { get; set; }
         public string CompentenceText { get; set; }
         public string[] Competencies { get; set; }
     }

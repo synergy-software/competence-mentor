@@ -12,8 +12,7 @@ namespace Model.Competence.Infrastructure
         {
             CommandStore.AppendToStream(aggregate.GetId(), command, Commands.CompetenceUpdateCommandType);
             
-            // todo faktory
-            new ChartManager().UserCompetenceChange(aggregate, command);
+            ChartFactory.Get().UserCompetenceChange(command);
         }
     }
 

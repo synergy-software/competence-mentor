@@ -38,13 +38,13 @@ namespace Web.Controllers
         }
 
 
-        [Route("api/statistics")]
+        [Route("api/competence/statistics")]
         [HttpGet]
         public CompetenceSummary[] Statistics()
         {
-            var entity = new ChartManager();
-            return entity.GetStatistics();
+            return ChartFactory.Get().GetStatistics();
         }
+
     }
 
     public class UserCompetenceUpdateModel

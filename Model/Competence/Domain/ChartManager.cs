@@ -13,10 +13,9 @@ namespace Model.Competence.Domain
         private static readonly object SyncRoot = new object();
 
 
-        public void UserCompetenceChange(UserCompetence userCompetence, CompetenceUpdateCommand command)
+        public void UserCompetenceChange(CompetenceUpdateCommand command)
         {
-            var userId = userCompetence.GetId();
-
+            string userId = command.UserId;
             lock (SyncRoot)
             {
                 ClearUserCompetencies(userId);
