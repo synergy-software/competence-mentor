@@ -51,7 +51,7 @@ namespace Web.Tests.Controllers
         public void Search()
         {
             // Arrange
-            CommandStore.DatabasePath = AppDomain.CurrentDomain.BaseDirectory;
+            CommandStore.DatabasePath = AppDomain.CurrentDomain.BaseDirectory + @"\\..\\..\\..\\Web\\App_Data";
 
             var controller = new CompetenceController();
 
@@ -59,7 +59,7 @@ namespace Web.Tests.Controllers
             var result = controller.Search("c#");
 
             // Assert
-            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual(2, result.Length);
         }
     }
 }

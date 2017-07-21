@@ -6,18 +6,17 @@ using System.Threading;
 
 namespace Model.Competence.Domain
 {
-    public class ChartManager
+    public class CompetencyAggregator
     {
-        // nazwa kompentecji -> ilość osób
-        private static readonly Dictionary<string, List<string>> userCompetencies = new Dictionary<string, List<string>>();
-        private static readonly object SyncRoot = new object();
-
+        // nazwa kompentecji -> osoby
+        private readonly Dictionary<string, List<string>> userCompetencies = new Dictionary<string, List<string>>();
+        private static readonly object syncRoot = new object();
 
         public void UserCompetenceChange(CompetenceUpdateCommand command)
         {
             string userId = command.UserId;
             var factory = Factory.GetSynonyms();
-            lock (SyncRoot)
+            lock (syncRoot)
             {
                 ClearUserCompetencies(userId);
                 foreach (var competency in command.Competencies)
@@ -37,7 +36,7 @@ namespace Model.Competence.Domain
 
         private void ClearUserCompetencies(string userId)
         {
-            lock (SyncRoot)
+            lock (syncRoot)
             {
                 foreach (var userCompetencyList in userCompetencies.Values)
                 {
@@ -48,7 +47,7 @@ namespace Model.Competence.Domain
 
         public CompetenceSummary[] GetStatistics()
         {
-            lock (SyncRoot)
+            lock (syncRoot)
             {
                 return
                     userCompetencies
@@ -60,16 +59,16 @@ namespace Model.Competence.Domain
 
         public void ResetDuringTests()
         {
-            lock (SyncRoot)
+            lock (syncRoot)
             {
                 userCompetencies.Clear();
             }
         }
 
-        public string[] Search(List<string> compentencies)
+        public string[] SearchUsers(List<string> competencies)
         {
             List<string> userListAll = new List<string>();
-            foreach (var competence in compentencies)
+            foreach (var competence in competencies)
             {
                 var competenceSynonym = Factory.GetSynonyms().FindCoreSynonym(competence);
 

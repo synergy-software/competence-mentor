@@ -14,46 +14,46 @@ namespace Web.Tests.Competence.Domain
         [TestInitialize]
         public void Init()
         {
-            new ChartManager().ResetDuringTests();
+            new CompetencyAggregator().ResetDuringTests();
         }
 
         [TestMethod]
         public void FindManyCompetencies()
         {
-            var charts = new ChartManager();
+            var charts = new CompetencyAggregator();
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "1", Competencies = new[] { "comp1", "comp2" } });
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "2", Competencies = new[] { "comp1", "comp3" } });
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "3", Competencies = new[] { "comp2", "comp3" } });
-            var result = charts.Search(new List<string> {"comp1", "non_exist"});
+            var result = charts.SearchUsers(new List<string> {"comp1", "non_exist"});
             CollectionAssert.AreEquivalent(new[] { "1", "2" }, result);
         }
 
         [TestMethod]
         public void FindManyCompetenciesAll()
         {
-            var charts = new ChartManager();
+            var charts = new CompetencyAggregator();
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "1", Competencies = new[] { "comp1", "comp2" } });
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "2", Competencies = new[] { "comp1", "comp3" } });
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "3", Competencies = new[] { "comp2", "comp3" } });
-            var result = charts.Search(new List<string> { "comp1", "comp3" });
+            var result = charts.SearchUsers(new List<string> { "comp1", "comp3" });
             CollectionAssert.AreEquivalent(new[] { "1", "2", "3" }, result);
         }
 
         [TestMethod]
         public void FindOneCompetency()
         {
-            var charts = new ChartManager();
+            var charts = new CompetencyAggregator();
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "1", Competencies = new[] { "comp1", "comp" } });
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "2", Competencies = new[] { "comp1", "comp3" } });
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "3", Competencies = new[] { "comp2", "comp3" } });
-            var result = charts.Search(new List<string> { "comp" });
+            var result = charts.SearchUsers(new List<string> { "comp" });
             CollectionAssert.AreEquivalent(new[] { "1" }, result);
         }
 
         [TestMethod]
         public void FindCompetenceByName()
         {
-            var charts = new ChartManager();
+            var charts = new CompetencyAggregator();
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "1", Competencies = new[] { "comp1", "comp" } });
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "2", Competencies = new[] { "comp1", "comp3" } });
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "3", Competencies = new[] { "comp2", "comp3", "inne" } });
@@ -66,9 +66,9 @@ namespace Web.Tests.Competence.Domain
         [TestMethod]
         public void Real1()
         {
-            var charts = new ChartManager();
+            var charts = new CompetencyAggregator();
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "1", Competencies = new[] { "C#" } });
-            var result = charts.Search(new List<string> { "C#"});
+            var result = charts.SearchUsers(new List<string> { "C#"});
             CollectionAssert.AreEquivalent(new[] { "1"}, result);
         }
     }

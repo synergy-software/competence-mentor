@@ -57,7 +57,7 @@ namespace Web.Controllers
                     continue;
                 list.Add(competence);
             }
-            return Factory.GetChartManager().Search(list);
+            return Factory.GetChartManager().SearchUsers(list);
         }
 
         [Route("api/competence/name")]
