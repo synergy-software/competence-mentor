@@ -12,7 +12,9 @@ namespace Model.Competence.Domain
             var regex = new Regex(@"\S*#(?:\[[^\]]+\]|\S+)");
             foreach (Match match in regex.Matches(compentenceText))
             {
-                result.Add(match.Value.Substring(1).ToLower());
+                var value = match.Value.Substring(1).ToLower();
+                value = value.TrimEnd(',');
+                result.Add(value);
             }
 
             return result.Distinct().ToArray();

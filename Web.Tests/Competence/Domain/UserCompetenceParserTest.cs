@@ -43,6 +43,23 @@ namespace Web.Tests.Competence.Domain
             CollectionAssert.AreEquivalent(result, new string[] { "c#", "asp.net", "oo-analysis", "design" });
         }
 
+        [TestMethod]
+        public void Real2()
+        {
+            var parser = new UserCompetenceParser();
+            var result = parser.ParseCompetenceText(@"I was
+a #.net developer, #software-architect, #team-lead, #project-manager, #research team lead, #QA tools developer, #support coordinator (service manager), #product-management team member, #business-analyst, #technology-trainer, #recruiter and #team-builder, production automation coordinator (templates, knowledge base), #database-designer, #release-manager.
+
+I will be 
+a software designer or team lead focused on building state-of-art, creative solutions using the most #efficient-processes.
+
+Out of the technologies I know, these are my favourite when building #enterprise-applications: 
+#WWF, #WCF, #ASP.NET #MVC, #CSS (plus #less-CSS), #jQuery, #HTML5, #NHibernate, #[SQL Server] db, #[SQL Server Integration Services], #[SQL Server Analysis Services], #log4net, #AutoMapper, #Castle (#Windsor), #NUnit + #Moq");
+            Console.WriteLine(string.Join(" | ", result));
+        }
+
+        
+
 
     }
 }
