@@ -1,4 +1,7 @@
-﻿using Model.Competence.Domain;
+﻿using System;
+using System.IO;
+using Model.Competence.Domain;
+using Model.Infrastructure;
 using Newtonsoft.Json;
 
 namespace Model.Competence.Infrastructure
@@ -7,11 +10,11 @@ namespace Model.Competence.Infrastructure
     {
         public void Store(UserCompetence aggregate, CompetenceUpdateCommand command)
         {
-            var aggregateId = aggregate.GetId();
-            var json = JsonConvert.SerializeObject(command);
+            CommandStore.AppendToStream(aggregate.GetId(), command);
 
+            //tutaj
         }
     }
 
-    //public class CommandEnvelope
+
 }
