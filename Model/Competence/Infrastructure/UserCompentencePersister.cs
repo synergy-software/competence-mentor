@@ -8,6 +8,7 @@ namespace Model.Competence.Infrastructure
     public class UserCompentencePersister : IUserCompentencePersister
     {
         private static readonly object SyncRoot = new object();
+        public static string Path { get; set; }
 
         public void Store(UserCompetence aggregate, CompetenceUpdateCommand command)
         {
@@ -20,7 +21,8 @@ namespace Model.Competence.Infrastructure
 
             lock (SyncRoot)
             {
-                File.AppendAllLines("c:\\temp\\store.db", new[] {json});
+                var storageFile = System.IO.Path.Combine(Path, "store.db");
+                File.AppendAllLines(storageFile, new[] {json});
             }
         }
     }
