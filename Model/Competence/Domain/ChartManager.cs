@@ -64,12 +64,18 @@ namespace Model.Competence.Domain
             }
         }
 
-        public string[] Search(string compentence)
+        public string[] Search(List<string> compentencies)
         {
-            List<string> list;
-            if (userCompetencies.TryGetValue(compentence, out list))
-                return list.ToArray();
-            return new string[] {};
+            List<string> userListAll = new List<string>();
+            foreach (var compentence in compentencies)
+            {
+                List<string> listUserIds;
+                if (userCompetencies.TryGetValue(compentence, out listUserIds))
+                {
+                    userListAll.AddRange(listUserIds);
+                }
+            }
+            return userListAll.Distinct().ToArray();
         }
     }
 

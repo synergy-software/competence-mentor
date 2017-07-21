@@ -50,7 +50,15 @@ namespace Web.Controllers
         [HttpGet]
         public string[] Search(string compentence)
         {
-            return ChartFactory.Get().Search(compentence);
+            var list = new List<string>();
+            var competenceList = compentence.Trim().Split(' ');
+            foreach (var competence in competenceList)
+            {
+                if (string.IsNullOrWhiteSpace(competence))
+                    continue;
+                list.Add(competence.Trim().ToLower());
+            }
+            return ChartFactory.Get().Search(list);
         }
     }
 
