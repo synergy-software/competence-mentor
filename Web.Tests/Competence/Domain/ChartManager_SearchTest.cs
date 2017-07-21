@@ -71,5 +71,16 @@ namespace Web.Tests.Competence.Domain
             var result = charts.SearchUsers(new List<string> { "C#"});
             CollectionAssert.AreEquivalent(new[] { "1"}, result);
         }
+
+        [TestMethod]
+        public void Real2()
+        {
+            var charts = new CompetencyAggregator();
+            charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "1", Competencies = new[] { "cert-msad" } });
+            var result = charts.SearchUsers(new List<string> { "[cert msad]" });
+            CollectionAssert.AreEquivalent(new[] { "1" }, result);
+        }
+
+        
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Routing;
@@ -50,6 +51,15 @@ namespace Web.Controllers
         public string[] Search(string compentence)
         {
             var list = new List<string>();
+            var regex = new Regex(@"(\[.*?\])");
+            foreach (Match match in regex.Matches(compentence))
+            {
+                var value = match.Value;
+                list.Add(value);
+            }
+            compentence = regex.Replace(compentence, "92AD4AE5-F98A-4897-A73F-B905CC224E9B");
+            compentence = compentence.Replace("92AD4AE5-F98A-4897-A73F-B905CC224E9B", "");
+
             var competenceList = compentence.Trim().Split(' ');
             foreach (var competence in competenceList)
             {

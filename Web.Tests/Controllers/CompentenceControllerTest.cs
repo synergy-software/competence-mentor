@@ -56,7 +56,7 @@ namespace Web.Tests.Controllers
             var controller = new CompetenceController();
 
             // Act
-            var result = controller.Search("c#");
+            var result = controller.Search("[database designer] początek [dask asdfs] [pola]");
 
             // Assert
             Assert.AreEqual(2, result.Length);
