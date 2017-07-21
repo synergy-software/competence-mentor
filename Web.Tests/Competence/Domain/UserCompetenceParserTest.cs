@@ -34,5 +34,15 @@ namespace Web.Tests.Competence.Domain
             var result = parser.ParseCompetenceText("#");
             Assert.IsTrue(result.Length == 0);
         }
+
+        [TestMethod]
+        public void Real1()
+        {
+            var parser = new UserCompetenceParser();
+            var result = parser.ParseCompetenceText("Passionate #C# & #ASP.NET developer. My knowledge is confirmed by working in big projects for huge clients. I am very eager to learn new things and always looking for new opportunities (only remote). Specialties: #C# and #ASP.NET programming, #OO-analysis and #design");
+            CollectionAssert.AreEquivalent(result, new string[] { "c#", "asp.net", "oo-analysis", "design" });
+        }
+
+
     }
 }
