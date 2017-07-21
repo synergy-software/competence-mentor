@@ -12,19 +12,19 @@
     <div class="card-panel">
         <div class="row">
             <form class="col s12">
-            <div class="row">
-                <div class="input-field col s10">
-                    <input id="term" type="text" class="validate">
-                    <label for="term">Search for</label>
+                <div class="row">
+                    <div class="input-field col s10">
+                        <input id="term" type="text" class="validate">
+                        <label for="term">Search for</label>
+                    </div>
+                    <div class="col s2">
+                        <a class="waves-effect waves-light btn" v-on:click="search"><i class="material-icons left">search</i></a>
+                    </div>
                 </div>
-                <div class="col s2">
-                    <a class="waves-effect waves-light btn" v-on:click="search"><i class="material-icons left">search</i></a>
-                </div>
-            </div>      
             </form>
         </div>
-        <ul class="collection">                    
-            <li v-for="item in results" class="collection-item">{{item.name}}</li>       
+        <ul class="collection">
+            <li v-for="item in results" class="collection-item">{{item.name}}</li>
         </ul>
     </div>
 </script>
@@ -77,7 +77,8 @@
             </profile>
 
         </div>
-        <script src="app.js"></script>
+    </div>
+    <script src="app.js"></script>
 </body>
 
 </html>

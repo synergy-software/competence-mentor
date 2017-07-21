@@ -1,3 +1,5 @@
+var apiRoot = "http://localhost:2392/api/";
+var userId = 55;
 Vue.component('aggregations', {
   template:'#Aggregations'
 });
@@ -5,13 +7,14 @@ Vue.component('aggregations', {
 Vue.component('search', {
   template:'#Search',
   data:function(){
+   
     return {
-    results:[
-      {name:"cepi"},
-      {name:"mace"},
-      {name:"wosw"}
-    ]
-  };
+      results:[
+        {name:"cepi"},
+        {name:"mace"},
+        {name:"wosw"}
+      ]
+    };
   },
   methods:{
     search:function(){
@@ -25,23 +28,27 @@ Vue.component('profile', {
 
   props: [],
   data: function () {
+     this.loadData();
     return {
-      message: 'Moje ulubione technologie to #c# #java oraz #elasticsearch',
-      competences: [{
-        id: "ss",
-        text: "c#"
-      }, {
-        id: "xx",
-        text: "Java"
-      }, {
-        id: "aa",
-        text: "elasticsearch"
-      }]
+      message: '',
+      competences: []
     };
   },
   methods: {
     update: function () {
-      alert(this.message);
+      var that = this;
+      $.ajax({
+        url: apiRoot+"competence",
+        method:"POST",
+        contentType:'application/json',
+        dataType: "json",
+        data:JSON.stringify({
+          UserId:userId,
+          CompetenceText: this.message
+        })
+      }).done(function(){
+        that.loadData();
+      })
     },
     loadProfile: function () {
 
@@ -51,6 +58,16 @@ Vue.component('profile', {
     },
     loadAggregations: function () {
 
+    },
+    loadData(){
+      var that = this;
+      $.get(apiRoot+"Competence/"+userId).done(function(data){
+          that.message = data.CompetenceText;
+          that.competences.length = 0;
+          data.Competencies.forEach(function(el){
+            that.competences.push({text:el});
+          });
+      });
     }
   }
 });
