@@ -52,6 +52,7 @@ namespace Model.Competence.Domain
                 return
                     userCompetencies
                         .Select(x => new CompetenceSummary {Competence = x.Key, Count = x.Value.Count})
+                        .Where(x=>x.Count > 0)
                         .ToArray();
             }
         }
