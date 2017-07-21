@@ -15,7 +15,8 @@ namespace Web.Tests.Competence.Domain
         [TestMethod]
         public void Test1()
         {
-            var synonyms = new Synonyms();
+            var synonyms = new Synonyms(new Dictionary<string, string>());
+            synonyms.Add("mssql", "ms-sql");
             var result = synonyms.FindCoreSynonym("mssql");
             Assert.AreEqual("mssql", result);
         }
@@ -23,7 +24,7 @@ namespace Web.Tests.Competence.Domain
         [TestMethod]
         public void Test2()
         {
-            var synonyms = new Synonyms();
+            var synonyms = new Synonyms(new Dictionary<string, string>());
             synonyms.Add("mssql", "ms-sql");
             var result = synonyms.FindCoreSynonym("mssql");
             Assert.AreEqual("mssql", result);
@@ -34,7 +35,7 @@ namespace Web.Tests.Competence.Domain
         [TestMethod]
         public void TestConventions()
         {
-            var synonyms = new Synonyms();
+            var synonyms = new Synonyms(new Dictionary<string, string>());
             Assert.AreEqual("mssql", synonyms.FindCoreSynonym("mssql "));
             Assert.AreEqual("mssql", synonyms.FindCoreSynonym("MsSql"));
             Assert.AreEqual("ms sql", synonyms.FindCoreSynonym("ms-SQL"));
