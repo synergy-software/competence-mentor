@@ -9,7 +9,7 @@ namespace Model.Competence.Infrastructure
     {
         private static readonly object SyncRoot = new object();
 
-        public void Store(UserCompetence aggregate, CompentenceUpdateCommand command)
+        public void Store(UserCompetence aggregate, CompetenceUpdateCommand command)
         {
             var aggregateId = aggregate.GetId();
             var envelope = new CommandEnvelope(aggregateId, command);

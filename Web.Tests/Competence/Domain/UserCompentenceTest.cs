@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.Competence.Domain;
 using Model.Competence.Infrastructure;
 
@@ -7,17 +9,52 @@ namespace Web.Tests.Competence.Domain
     [TestClass]
     public class UserCompentenceTest
     {
-        [TestMethod]
-        public void UpdateAndRead()
+
+        UserCompentenceMockPersister persister;
+        UserCompetence entity;
+
+        [TestInitialize]
+        public void Init()
         {
-            var repository = new UserCompetenceRepository();
-            var entity = repository.Get("user1");
-            entity.UpdateCompentence( new CompentenceUpdateCommand
+            persister = new UserCompentenceMockPersister();
+            entity = new UserCompetence("user1", persister);
+        }
+
+        [TestMethod]
+        public void NoCompetence()
+        {
+            entity.UpdateCompentence(new CompetenceUpdateCommand
             {
                 CompentenceText = "lala"
-            
             });
-            Assert.AreEqual("lala", entity.GetCompetenceText());
+
+            Assert.IsTrue(persister.List.Single().command.Competencies.Length == 0);
+        }
+
+        [TestMethod]
+        public void OneCompetence()
+        {
+            entity.UpdateCompentence(new CompetenceUpdateCommand
+            {
+                CompentenceText = "lala #komp1"
+            });
+
+            Assert.IsTrue(persister.List.Single().command.Competencies.Length == 1);
+        }
+    }
+
+    public class UserCompentenceMockPersister : IUserCompentencePersister
+    {
+        public readonly List<Entry> List = new List<Entry>();
+
+        public class Entry
+        {
+            public UserCompetence aggregate;
+            public CompetenceUpdateCommand command;
+        }
+        public void Store(UserCompetence aggregate, CompetenceUpdateCommand command)
+        {
+            List.Add(new Entry {aggregate = aggregate, command = command});
         }
     }
 }

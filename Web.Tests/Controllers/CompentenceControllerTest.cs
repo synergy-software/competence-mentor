@@ -15,10 +15,10 @@ namespace Web.Tests.Controllers
             CompetenceController controller = new CompetenceController();
 
             // Act
-            string result = controller.Get("user1");
+            var result = controller.Get("user1");
 
             // Assert
-            Assert.AreEqual("value", result);
+            Assert.AreEqual("tekst #kompetencja1 #kompetencja2", result.CompetenceText);
         }
 
         [TestMethod]

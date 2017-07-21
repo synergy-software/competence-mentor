@@ -2,6 +2,6 @@
 {
     public interface IUserCompentencePersister
     {
-        void Store(UserCompetence aggregate, CompentenceUpdateCommand command);
+        void Store(UserCompetence aggregate, CompetenceUpdateCommand command);
     }
 }

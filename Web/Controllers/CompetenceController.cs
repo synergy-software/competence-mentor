@@ -4,31 +4,44 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Model.Competence.Domain;
+using Model.Competence.Infrastructure;
 
 namespace Web.Controllers
 {
     public class CompetenceController : ApiController
     {
-        // GET api/competence/{userId}
-        public string Get(string userId)
+        // GET api/competence/{id}
+        public UserCompetenceGetModel Get(string id)
         {
-            return "tekst #kompetencja1";
+            return new UserCompetenceGetModel
+            {
+                CompetenceText = "tekst #kompetencja1 #kompetencja2",
+                Competencies = new[] {"#kompetencja1 #kompetencja2"}
+            };
         }
 
+        
         // POST api/competence
-        public void Post(string id, [FromBody]string value)
+        public void Post(UserCompetenceUpdateModel updateModel)
         {
-        }
-
-        // PUT api/competence/{id}
-        public void Put(UserCompetenceModel model)
-        {
+            var repo = new UserCompetenceRepository();
+            var entity = repo.Get(updateModel.UserId);
+            var command = new CompetenceUpdateCommand {CompentenceText = updateModel.CompetenceText};
+            entity.UpdateCompentence(command);
         }
     }
 
-    public class UserCompetenceModel
+    public class UserCompetenceUpdateModel
     {
         public string UserId;
-        public string CompentenceText;
+        public string CompetenceText;
+    }
+
+    public class UserCompetenceGetModel
+    {
+        //public string UserId;
+        public string CompetenceText;
+        public string[] Competencies;
     }
 }
