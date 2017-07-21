@@ -8,11 +8,11 @@ using Model.Infrastructure;
 
 namespace Model.Competence.Domain
 {
-    public class ChartFactory
+    public class Factory
     {
         private static ChartManager manager;
 
-        public static ChartManager Get()
+        public static ChartManager GetChartManager()
         {
             if (manager != null)
                 return manager;
@@ -35,6 +35,18 @@ namespace Model.Competence.Domain
             }
 
             return manager;
+        }
+
+        private static Synonyms synonyms;
+
+        public static Synonyms GetSynonyms()
+        {
+            if (synonyms != null)
+                return synonyms;
+
+            synonyms = new Synonyms();
+
+            return synonyms;
         }
     }
 }

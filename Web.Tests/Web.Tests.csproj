@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="Competence\Domain\ChartManager_SearchTest.cs" />
     <Compile Include="Competence\Domain\ChartManager_StatisticsTest.cs" />
+    <Compile Include="Competence\Domain\SynonymsTest.cs" />
     <Compile Include="Competence\Domain\UserCompentenceTest.cs" />
     <Compile Include="Competence\Domain\UserCompetenceParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
