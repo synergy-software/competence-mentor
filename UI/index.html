@@ -79,12 +79,20 @@
                 </ul>
             </div>
         </nav>
-        <div :is="currentPage">
-            </profile>
+        <div :is="currentPage" v-on:selectcompetence="search" v-bind:term="defaultTerm">
+           
 
         </div>
     </div>
     <script src="app.js"></script>
+    <style>
+        .circle{
+            cursor: pointer;
+        }
+        .circle text{
+        cursor: pointer;
+        }
+    </style>
 </body>
 
 </html>

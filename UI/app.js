@@ -1,9 +1,16 @@
 var apiRoot = "http://localhost:2392/api/";
-var userId = 55;
+var userId = "cepi";
 Vue.component('aggregations', {
   template:'#Aggregations',
     mounted: function(){
-    var diameter = 500; //max size of the bubbles
+    var that = this;
+    $.ajax({
+        url: apiRoot+"competence/statistics/",
+        method:"GET",
+        contentType:'application/json',        
+      }).done(function(result){
+        result.forEach(function(r){r.size=r.Count});
+        var diameter = 500; //max size of the bubbles
     var color    = d3.scale.category20c(); //color category
 
     var bubble = d3.layout.pack()
@@ -19,12 +26,7 @@ Vue.component('aggregations', {
    
 
     //bubbles needs very specific format, convert data to this.
-    var nodes = bubble.nodes({children:[
-      {name:"java", size:5},
-      {name:"js", size:10},
-      {name:"c#", size:15},
-      {name:"elastic", size:20},
-    ]}).filter(function(d) { return !d.children; });
+    var nodes = bubble.nodes({children:result}).filter(function(d) { return !d.children; });
 
     //setup the chart
     var bubbles = svg.append("g")
@@ -38,33 +40,46 @@ Vue.component('aggregations', {
         .attr("r", function(d){ return d.r; })
         .attr("cx", function(d){ return d.x; })
         .attr("cy", function(d){ return d.y; })
-        .style("fill", function(d) { return color(d.value); });
+        .attr("class", "circle")
+        .style("fill", function(d) { return color(d.Count); })
+        .on("click", function(d){
+          that.$emit("selectcompetence", d.Competence);          
+        });
 
     //format the text for each bubble
     bubbles.append("text")
         .attr("x", function(d){ return d.x; })
         .attr("y", function(d){ return d.y + 5; })
         .attr("text-anchor", "middle")
-        .text(function(d){ return d.name; })
+        .text(function(d){ return d.Competence; })
         .style({
             "fill":"white", 
             "font-family":"Helvetica Neue, Helvetica, Arial, san-serif",
             "font-size": "12px"
         });
+      });
+      
   }, 
 });
 
 Vue.component('search', {
   template:'#Search',
+  props:["term"],
   data:function(){
    
     return {
       results:[
        
       ],
-      term:"",
+     // term:"",
       showNoResults:false     
     };
+  },
+  mounted:function(){
+    if(this.term!="")
+      {
+        this.search();
+      }
   },
   methods:{
     search:function(){
@@ -85,9 +100,7 @@ Vue.component('search', {
   }
 });
 Vue.component('profile', {
-
   template: '#Profile',
-  props: [],
   data: function () {
      this.loadData();
     return {
@@ -120,6 +133,7 @@ Vue.component('profile', {
     loadAggregations: function () {
 
     },
+   
     loadData(){
       var that = this;
       $.get(apiRoot+"Competence/"+userId).done(function(data){
@@ -140,9 +154,14 @@ var app = new Vue({
    isAggregations:false,
    isSearch:false,
    isProfile:true,
-   currentPage: "profile"
+   currentPage: "profile",
+   defaultTerm:""
   },
   methods:{
+     search:function(term){
+       this.defaultTerm = term;
+       this.showSearch();
+    },
     showProfile:function(){
       this.currentPage = "profile";
       this.isProfile = true;
