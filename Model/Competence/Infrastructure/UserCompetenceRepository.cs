@@ -6,7 +6,9 @@ namespace Model.Competence.Infrastructure
     {
         public UserCompetence Get(string userId)
         {
-            return new UserCompetence(userId, new UserCompentencePersister());
+            var persister = new UserCompentencePersister();
+
+            return new UserCompetence(userId, persister);
         }
     }
 }
