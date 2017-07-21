@@ -8,13 +8,14 @@
 
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.0/js/materialize.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/x-template" id="Search">
     <div class="card-panel">
         <div class="row">
             <form class="col s12">
                 <div class="row">
                     <div class="input-field col s10">
-                        <input id="term" type="text" class="validate">
+                        <input id="term" type="text" v-model="term" class="validate" />
                         <label for="term">Search for</label>
                     </div>
                     <div class="col s2">
@@ -26,10 +27,15 @@
         <ul class="collection">
             <li v-for="item in results" class="collection-item">{{item.name}}</li>
         </ul>
+        <div v-show="showNoResults">
+            No results
+        </div>
     </div>
 </script>
 <script type="text/x-template" id="Aggregations">
-    <div class="card-panel">Aggregations</div>
+    <div class="card-panel">
+        <svg id="Graph" width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>
+    </div>
 </script>
 <script type="text/x-template" id="Profile">
     <div>
