@@ -75,7 +75,10 @@ Vue.component('search', {
        
       ],
       term:defaultSearch,
-      showNoResults:false     
+      showNoResults:false,
+      selectedUserName: "",
+      selectedUserDescription:"",
+      selectedUserCompetences:[]     
     };
     defaultSearch = "";
     return state;
@@ -86,6 +89,7 @@ Vue.component('search', {
         this.search();
       }
       Materialize.updateTextFields();
+       $('#modal1').modal();
   },
   methods:{
     search:function(){
@@ -102,6 +106,21 @@ Vue.component('search', {
           that.results.push({name:item})
         });
       });
+    },
+    selectUser:function(user){
+      this.$emit("selectUser", user);
+      var that = this; 
+      $.get(apiRoot+"Competence/"+user.name).done(function(data){
+          that.selectedUserDescription = data.CompetenceText;
+          that.selectedUserName = user.name;
+          that.selectedUserCompetences.length =0;
+          data.Competencies.forEach(function(el){
+            that.selectedUserCompetences.push({text:el});
+          });
+           $('#modal1').modal('open');         
+      });
+     
+      
     }
   }
 });

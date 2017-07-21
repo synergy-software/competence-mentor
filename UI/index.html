@@ -10,27 +10,42 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.0/js/materialize.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/x-template" id="Search">
-    <div class="card-panel">
-        <div class="row">
-            <form class="col s12">
+    <div>
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <h4>{{selectedUserName}}</h4>
+                <p>{{selectedUserDescription}}</p>
                 <div class="row">
-                    <div class="input-field col s10">
-                        <input id="term" type="text" v-model="term" class="validate" />
-                        <label for="term">Search for</label>
-                    </div>
-                    <div class="col s2">
-                        <a class="waves-effect waves-light btn" v-on:click="search"><i class="material-icons left">search</i></a>
-                    </div>
+                    <div v-for="item in selectedUserCompetences" class="chip">{{item.text}}</div>
                 </div>
-            </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
         </div>
-        <ul class="collection">
-            <li v-for="item in results" class="collection-item">{{item.name}}</li>
-        </ul>
-        <div v-show="showNoResults">
-            No results
+        <div class="card-panel">
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s10">
+                            <input id="term" type="text" v-model="term" class="validate" />
+                            <label for="term">Search for</label>
+                        </div>
+                        <div class="col s2">
+                            <a class="waves-effect waves-light btn" v-on:click="search"><i class="material-icons left">search</i></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <ul class="collection">
+                <li v-for="item in results" class="collection-item" v-on:click="selectUser(item)">{{item.name}}</li>
+            </ul>
+            <div v-show="showNoResults">
+                No results
+            </div>
         </div>
     </div>
+
 </script>
 <script type="text/x-template" id="Aggregations">
     <div class="card-panel">
@@ -79,18 +94,19 @@
                 </ul>
             </div>
         </nav>
-        <div :is="currentPage" v-on:selectcompetence="search" >
-           
+        <div :is="currentPage" v-on:selectcompetence="search">
+
 
         </div>
     </div>
     <script src="app.js"></script>
     <style>
-        .circle{
+        .circle {
             cursor: pointer;
         }
-        .circle text{
-        cursor: pointer;
+
+        .circle text {
+            cursor: pointer;
         }
     </style>
 </body>
