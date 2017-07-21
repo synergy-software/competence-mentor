@@ -8,6 +8,12 @@
 
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.0/js/materialize.min.js"></script>
+<script type="text/x-template" id="Search">
+    <div class="card-panel">Search</div>
+</script>
+<script type="text/x-template" id="Aggregations">
+    <div class="card-panel">Aggregations</div>
+</script>
 <script type="text/x-template" id="Profile">
     <div>
         <div class="card-panel">
@@ -44,13 +50,13 @@
             <div class="nav-wrapper">
                 <a href="#" class="brand-logo right">Logo</a>
                 <ul id="nav-mobile" class="left hide-on-med-and-down">
-                    <li><a href="#">My profile</a></li>
-                    <li><a href="#">Search</a></li>
-                    <li><a href="#">Aggregations</a></li>
+                    <li><a href="#" v-on:click="showProfile">My profile</a></li>
+                    <li><a href="#" v-on:click="showSearch">Search</a></li>
+                    <li><a href="#" v-on:click="showAggregations">Aggregations</a></li>
                 </ul>
             </div>
         </nav>
-        <profile></profile>
+        <div :is="currentPage"></profile>
 
     </div>
     <script src="app.js"></script>

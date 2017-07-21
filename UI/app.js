@@ -1,3 +1,10 @@
+Vue.component('aggregations', {
+  template:'#Aggregations'
+});
+
+Vue.component('search', {
+  template:'#Search'
+});
 Vue.component('profile', {
 
   template: '#Profile',
@@ -36,6 +43,25 @@ Vue.component('profile', {
 
 
 var app = new Vue({
-  el: '#app'
-
+  el: '#app',
+  data: {    
+   isAggregations:false,
+   isSearch:false,
+   isProfile:true,
+   currentPage: "profile"
+  },
+  methods:{
+    showProfile:function(){
+      this.currentPage = "profile";
+      this.isProfile = true;
+      this.isSearch = false;
+      this.isAggregations = false;
+    },
+    showSearch:function(){
+      this.currentPage = "search";     
+    },
+    showAggregations:function(){
+       this.currentPage = "aggregations";   
+    }
+  }
 })
