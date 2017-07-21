@@ -3,7 +3,21 @@ Vue.component('aggregations', {
 });
 
 Vue.component('search', {
-  template:'#Search'
+  template:'#Search',
+  data:function(){
+    return {
+    results:[
+      {name:"cepi"},
+      {name:"mace"},
+      {name:"wosw"}
+    ]
+  };
+  },
+  methods:{
+    search:function(){
+      this.results.push({name:"xxxx"});
+    }
+  }
 });
 Vue.component('profile', {
 
