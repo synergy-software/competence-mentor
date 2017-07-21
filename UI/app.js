@@ -166,6 +166,7 @@ var app = new Vue({
      search:function(term){
        defaultSearch = term;
        this.showSearch();
+     
     },
     showProfile:function(){
       this.currentPage = "profile";
