@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Routing;
 using Model.Competence.Domain;
 using Model.Competence.Infrastructure;
 
@@ -34,6 +35,22 @@ namespace Web.Controllers
             var entity = repo.Get(updateModel.UserId);
             var command = new CompetenceUpdateCommand {CompentenceText = updateModel.CompetenceText};
             entity.UpdateCompentence(command);
+        }
+
+
+        [Route("api/competence/statistics")]
+        [HttpGet]
+        public CompetenceSummary[] Statistics()
+        {
+            return ChartFactory.Get().GetStatistics();
+        }
+
+
+        [Route("api/competence/search/")]
+        [HttpGet]
+        public string[] Search(string compentence)
+        {
+            return ChartFactory.Get().Search(compentence);
         }
     }
 

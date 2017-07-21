@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Threading;
 
@@ -8,39 +9,67 @@ namespace Model.Competence.Domain
     public class ChartManager
     {
         // nazwa kompentecji -> ilość osób
-        private static readonly ConcurrentDictionary<string, int> counts = new ConcurrentDictionary<string, int>();
+        private static readonly Dictionary<string, List<string>> userCompetencies = new Dictionary<string, List<string>>();
+        private static readonly object SyncRoot = new object();
 
-        public void UserCompetenceIncrease(UserCompetence userCompetence, CompetenceUpdateCommand command)
+
+        public void UserCompetenceChange(CompetenceUpdateCommand command)
         {
-            foreach (var competency in command.Competencies)
+            string userId = command.UserId;
+            lock (SyncRoot)
             {
-                counts.AddOrUpdate(competency, s => 1, (s, i) => i + 1);
+                ClearUserCompetencies(userId);
+                foreach (var competency in command.Competencies)
+                {
+                    List<string> list;
+                    if (userCompetencies.TryGetValue(competency, out list) == false)
+                    {
+                        list = new List<string>();
+                        userCompetencies[competency] = list;
+                    }
+
+                    list.Add(userId);
+                }
             }
         }
 
-        public void UserCompetenceDecrease(UserCompetence userCompetence, CompetenceUpdateCommand command)
+        private void ClearUserCompetencies(string userId)
         {
-            foreach (var competency in command.Competencies)
+            lock (SyncRoot)
             {
-                //lock (SyncRoot)
-                //{
-                //    int value;
-                //    if (counts.TryGetValue(competency, out value) == true)
-                //        counts[competency] = value - 1;
-                //}
-
-                counts.AddOrUpdate(competency, s => 0, (s, i) => i - 1);
+                foreach (var userCompetencyList in userCompetencies.Values)
+                {
+                    userCompetencyList.Remove(userId);
+                }
             }
         }
 
         public CompetenceSummary[] GetStatistics()
         {
-            return counts.Select(x => new CompetenceSummary { Competence = x.Key, Count = x.Value}).ToArray();
+            lock (SyncRoot)
+            {
+                return
+                    userCompetencies
+                        .Select(x => new CompetenceSummary {Competence = x.Key, Count = x.Value.Count})
+                        .Where(x=>x.Count > 0)
+                        .ToArray();
+            }
         }
 
         public void ResetDuringTests()
         {
-            counts.Clear();
+            lock (SyncRoot)
+            {
+                userCompetencies.Clear();
+            }
+        }
+
+        public string[] Search(string compentence)
+        {
+            List<string> list;
+            if (userCompetencies.TryGetValue(compentence, out list))
+                return list.ToArray();
+            return new string[] {};
         }
     }
 
