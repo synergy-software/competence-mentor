@@ -51,8 +51,11 @@ namespace Model.Competence.Domain
             var synonymDictionary = new Dictionary<string, string>();
             if (SynonymsFilePath != null)
             {
-                var json = File.ReadAllText(SynonymsFilePath);
-                synonymDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                if (File.Exists(SynonymsFilePath))
+                {
+                    var json = File.ReadAllText(SynonymsFilePath);
+                    synonymDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                }
             }
             synonyms = new Synonyms(synonymDictionary);
 

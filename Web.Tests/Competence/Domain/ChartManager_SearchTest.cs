@@ -61,5 +61,15 @@ namespace Web.Tests.Competence.Domain
             CollectionAssert.AreEquivalent(new[] { "comp", "comp1", "comp2", "comp3" }, result);
         }
 
+
+
+        [TestMethod]
+        public void Real1()
+        {
+            var charts = new ChartManager();
+            charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "1", Competencies = new[] { "C#" } });
+            var result = charts.Search(new List<string> { "C#"});
+            CollectionAssert.AreEquivalent(new[] { "1"}, result);
+        }
     }
 }
