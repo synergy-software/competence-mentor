@@ -29,8 +29,10 @@ namespace Web.Tests.Competence.Domain
         public void TestIncrease()
         {
             var charts = new ChartManager();
-            charts.UserCompetenceIncrease(new UserCompetence("1", null), new CompetenceUpdateCommand {Competencies = new []{"1", "2"}});
-            charts.UserCompetenceIncrease(new UserCompetence("1", null), new CompetenceUpdateCommand {Competencies = new []{"1", "3"}});
+            charts.UserCompetenceChange(new UserCompetence("1", null),
+                new CompetenceUpdateCommand {Competencies = new[] {"comp1", "comp2"}});
+            charts.UserCompetenceChange(new UserCompetence("2", null),
+                new CompetenceUpdateCommand {Competencies = new[] {"comp1", "comp3"}});
             var result = charts.GetStatistics();
             var numbers = result.OrderBy(x => x.Competence).Select(x => x.Count).ToArray();
             CollectionAssert.AreEquivalent(new [] {2,1,1}, numbers);
@@ -40,11 +42,11 @@ namespace Web.Tests.Competence.Domain
         public void TestIncreaseDecrease()
         {
             var charts = new ChartManager();
-            charts.UserCompetenceIncrease(new UserCompetence("1", null), new CompetenceUpdateCommand { Competencies = new[] { "1", "2" } });
-            charts.UserCompetenceDecrease(new UserCompetence("1", null), new CompetenceUpdateCommand { Competencies = new[] { "1", "2" } });
+            charts.UserCompetenceChange(new UserCompetence("1", null), new CompetenceUpdateCommand { Competencies = new[] { "comp1", "comp2" } });
+            charts.UserCompetenceChange(new UserCompetence("1", null), new CompetenceUpdateCommand { Competencies = new string[] {} });
             var result = charts.GetStatistics();
-            Assert.AreEqual(0, result.Single(x => x.Competence == "1").Count);
-            Assert.AreEqual(0, result.Single(x => x.Competence == "2").Count);
+            Assert.AreEqual(0, result.Single(x => x.Competence == "comp1").Count);
+            Assert.AreEqual(0, result.Single(x => x.Competence == "comp2").Count);
         }
     }
 }
