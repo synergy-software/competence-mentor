@@ -9,7 +9,7 @@ using Model.Competence.Domain;
 namespace Web.Tests.Competence.Domain
 {
     [TestClass]
-    public class ChartManagerTest
+    public class ChartManager_StatisticsTest
     {
         [TestInitialize]
         public void Init()
@@ -43,8 +43,7 @@ namespace Web.Tests.Competence.Domain
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId="1", Competencies = new[] { "comp1", "comp2" } });
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId="1", Competencies = new string[] {} });
             var result = charts.GetStatistics();
-            Assert.AreEqual(0, result.Single(x => x.Competence == "comp1").Count);
-            Assert.AreEqual(0, result.Single(x => x.Competence == "comp2").Count);
+            Assert.AreEqual(0, result.Length);
         }
     }
 }
