@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Model.Competence.Domain
 {
@@ -6,13 +8,16 @@ namespace Model.Competence.Domain
     {
         public string[] ParseCompetenceText(string compentenceText)
         {
-            return compentenceText
-                .Split(' ', ',')
-                .Where(x=>x != null)
-                .Where(x=>x.StartsWith("#"))
-                .Where(x=>x.Length >= 2)
-                .Select(x=>x.Substring(1))
-                .ToArray();
+            List<string> result = new List<string>();
+            var regex = new Regex(@"\S*#(?:\[[^\]]+\]|\S+)");
+            foreach (Match match in regex.Matches(compentenceText))
+            {
+                var value = match.Value.Substring(1).ToLower();
+                value = value.TrimEnd(',');
+                result.Add(value);
+            }
+
+            return result.Distinct().ToArray();
         }
     }
 }
