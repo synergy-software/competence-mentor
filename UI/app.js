@@ -44,7 +44,7 @@ Vue.component('aggregations', {
         .attr("class", "circle")
         .style("fill", function(d) { return color(d.Count); })
         .on("click", function(d){
-          that.$emit("selectcompetence", d.Competence);          
+          that.$emit("selectcompetence", "["+d.Competence+"]");          
         }).append("svg:title")
       .text(function(d, i) { 
 
