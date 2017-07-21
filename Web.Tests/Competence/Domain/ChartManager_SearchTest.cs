@@ -50,5 +50,16 @@ namespace Web.Tests.Competence.Domain
             CollectionAssert.AreEquivalent(new[] { "1" }, result);
         }
 
+        [TestMethod]
+        public void FindCompetenceByName()
+        {
+            var charts = new ChartManager();
+            charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "1", Competencies = new[] { "comp1", "comp" } });
+            charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "2", Competencies = new[] { "comp1", "comp3" } });
+            charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId = "3", Competencies = new[] { "comp2", "comp3", "inne" } });
+            var result = charts.FindCompetenceByPrefixName("comp");
+            CollectionAssert.AreEquivalent(new[] { "comp", "comp1", "comp2", "comp3" }, result);
+        }
+
     }
 }

@@ -77,6 +77,11 @@ namespace Model.Competence.Domain
             }
             return userListAll.Distinct().ToArray();
         }
+
+        public string[] FindCompetenceByPrefixName(string compentencePrefix)
+        {
+            return userCompetencies.Keys.Where(x => x.StartsWith(compentencePrefix)).ToArray();
+        }
     }
 
     public class CompetenceSummary
