@@ -44,8 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Competence\Domain\ChartManager.cs" />
     <Compile Include="Competence\Domain\IUserCompentencePersister.cs" />
     <Compile Include="Competence\Domain\UserCompetenceParser.cs" />
+    <Compile Include="Competence\Infrastructure\Commands.cs" />
     <Compile Include="Competence\Infrastructure\UserCompentencePersister.cs" />
     <Compile Include="Competence\Domain\UserCompetence.cs" />
     <Compile Include="Competence\Infrastructure\UserCompetenceRepository.cs" />

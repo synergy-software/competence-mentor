@@ -1,4 +1,5 @@
-﻿using Model.Competence.Domain;
+﻿using System;
+using Model.Competence.Domain;
 using Model.Infrastructure;
 
 namespace Model.Competence.Infrastructure
@@ -12,11 +13,16 @@ namespace Model.Competence.Infrastructure
             var state = new UserCompetence.State(userId);
             foreach (var commandEnvelope in commands)
             {
-                if (commandEnvelope.CommandType == typeof(CompetenceUpdateCommand).FullName)
+                switch (commandEnvelope.CommandType)
                 {
-                    var command = commandEnvelope.GetCommand<CompetenceUpdateCommand>();
-                    state.Apply(command);
+                    case Commands.CompetenceUpdateCommandType:
+                        var command = commandEnvelope.GetCommand<CompetenceUpdateCommand>();
+                        state.Apply(command);
+                        break;
+                    default:
+                        throw new InvalidOperationException();
                 }
+
             }
 
 
