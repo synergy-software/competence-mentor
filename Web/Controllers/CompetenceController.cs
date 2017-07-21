@@ -30,12 +30,6 @@ namespace Web.Controllers
             var command = new CompetenceUpdateCommand {CompentenceText = updateModel.CompetenceText};
             entity.UpdateCompentence(command);
         }
-
-        // PUT api/competence/{id}
-        public void Put(string id, [FromBody]string competenceText)
-        {
-        }
-
     }
 
     public class UserCompetenceUpdateModel
