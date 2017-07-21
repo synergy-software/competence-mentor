@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Competence\Domain\Factory.cs" />
-    <Compile Include="Competence\Domain\ChartManager.cs" />
+    <Compile Include="Competence\Domain\CompetencyAggregator.cs" />
     <Compile Include="Competence\Domain\IUserCompentencePersister.cs" />
     <Compile Include="Competence\Domain\Synonyms.cs" />
     <Compile Include="Competence\Domain\UserCompetenceParser.cs" />

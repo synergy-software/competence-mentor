@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Model.Infrastructure;
 using Web.Controllers;
 
 namespace Web.Tests.Controllers
@@ -43,6 +45,21 @@ namespace Web.Tests.Controllers
             //controller.Put("User1", "mój tekst #kompoent");
 
             // Assert
+        }
+
+        [TestMethod]
+        public void Search()
+        {
+            // Arrange
+            CommandStore.DatabasePath = AppDomain.CurrentDomain.BaseDirectory + @"\\..\\..\\..\\Web\\App_Data";
+
+            var controller = new CompetenceController();
+
+            // Act
+            var result = controller.Search("c#");
+
+            // Assert
+            Assert.AreEqual(2, result.Length);
         }
     }
 }

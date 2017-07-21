@@ -12,14 +12,14 @@ namespace Model.Competence.Domain
 {
     public class Factory
     {
-        private static ChartManager manager;
+        private static CompetencyAggregator manager;
 
-        public static ChartManager GetChartManager()
+        public static CompetencyAggregator GetChartManager()
         {
             if (manager != null)
                 return manager;
 
-            manager = new ChartManager();
+            manager = new CompetencyAggregator();
 
             var commands = CommandStore.ReadAll();
             foreach (var commandEnvelope in commands)

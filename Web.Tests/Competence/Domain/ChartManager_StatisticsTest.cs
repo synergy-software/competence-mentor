@@ -14,13 +14,13 @@ namespace Web.Tests.Competence.Domain
         [TestInitialize]
         public void Init()
         {
-            new ChartManager().ResetDuringTests();
+            new CompetencyAggregator().ResetDuringTests();
         }
 
         [TestMethod]
         public void None()
         {
-            var charts = new ChartManager();
+            var charts = new CompetencyAggregator();
             var result = charts.GetStatistics();
             Assert.IsTrue(result.Length == 0);
         }
@@ -28,7 +28,7 @@ namespace Web.Tests.Competence.Domain
         [TestMethod]
         public void TestIncrease()
         {
-            var charts = new ChartManager();
+            var charts = new CompetencyAggregator();
             charts.UserCompetenceChange(new CompetenceUpdateCommand {UserId = "1", Competencies = new[] {"comp1", "comp2"}});
             charts.UserCompetenceChange(new CompetenceUpdateCommand {UserId = "2", Competencies = new[] {"comp1", "comp3"}});
             var result = charts.GetStatistics();
@@ -39,7 +39,7 @@ namespace Web.Tests.Competence.Domain
         [TestMethod]
         public void TestIncreaseDecrease()
         {
-            var charts = new ChartManager();
+            var charts = new CompetencyAggregator();
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId="1", Competencies = new[] { "comp1", "comp2" } });
             charts.UserCompetenceChange(new CompetenceUpdateCommand { UserId="1", Competencies = new string[] {} });
             var result = charts.GetStatistics();
