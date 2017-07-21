@@ -16,16 +16,18 @@ namespace Model.Competence.Domain
         public void UserCompetenceChange(CompetenceUpdateCommand command)
         {
             string userId = command.UserId;
+            var factory = Factory.GetSynonyms();
             lock (SyncRoot)
             {
                 ClearUserCompetencies(userId);
                 foreach (var competency in command.Competencies)
                 {
+                    var competencySynonym = factory.FindCoreSynonym(competency);
                     List<string> list;
-                    if (userCompetencies.TryGetValue(competency, out list) == false)
+                    if (userCompetencies.TryGetValue(competencySynonym, out list) == false)
                     {
                         list = new List<string>();
-                        userCompetencies[competency] = list;
+                        userCompetencies[competencySynonym] = list;
                     }
 
                     list.Add(userId);
@@ -67,10 +69,12 @@ namespace Model.Competence.Domain
         public string[] Search(List<string> compentencies)
         {
             List<string> userListAll = new List<string>();
-            foreach (var compentence in compentencies)
+            foreach (var competence in compentencies)
             {
+                var competenceSynonym = Factory.GetSynonyms().FindCoreSynonym(competence);
+
                 List<string> listUserIds;
-                if (userCompetencies.TryGetValue(compentence, out listUserIds))
+                if (userCompetencies.TryGetValue(competenceSynonym, out listUserIds))
                 {
                     userListAll.AddRange(listUserIds);
                 }

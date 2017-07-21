@@ -26,7 +26,6 @@ namespace Web.Controllers
                 Competencies = entity.CompetenceList
             };
         }
-
         
         // POST api/competence
         public void Post(UserCompetenceUpdateModel updateModel)
@@ -42,7 +41,7 @@ namespace Web.Controllers
         [HttpGet]
         public CompetenceSummary[] Statistics()
         {
-            return ChartFactory.Get().GetStatistics();
+            return Factory.GetChartManager().GetStatistics();
         }
 
 
@@ -56,16 +55,17 @@ namespace Web.Controllers
             {
                 if (string.IsNullOrWhiteSpace(competence))
                     continue;
-                list.Add(competence.Trim().ToLower());
+                list.Add(competence);
             }
-            return ChartFactory.Get().Search(list);
+            return Factory.GetChartManager().Search(list);
         }
 
         [Route("api/competence/name")]
         [HttpGet]
         public string[] FindCompetenceByName(string compentencePrefix)
         {
-            return ChartFactory.Get().FindCompetenceByPrefixName(compentencePrefix);
+            compentencePrefix = Factory.GetSynonyms().FindCoreSynonym(compentencePrefix);
+            return Factory.GetChartManager().FindCompetenceByPrefixName(compentencePrefix);
         }
     }
 

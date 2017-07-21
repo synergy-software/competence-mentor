@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model.Competence.Infrastructure;
 using Model.Infrastructure;
+using Newtonsoft.Json;
 
 namespace Model.Competence.Domain
 {
-    public class ChartFactory
+    public class Factory
     {
         private static ChartManager manager;
 
-        public static ChartManager Get()
+        public static ChartManager GetChartManager()
         {
             if (manager != null)
                 return manager;
@@ -35,6 +37,26 @@ namespace Model.Competence.Domain
             }
 
             return manager;
+        }
+
+        public static string SynonymsFilePath { get; set; }
+
+        private static Synonyms synonyms;
+
+        public static Synonyms GetSynonyms()
+        {
+            if (synonyms != null)
+                return synonyms;
+
+            var synonymDictionary = new Dictionary<string, string>();
+            if (SynonymsFilePath != null)
+            {
+                var json = File.ReadAllText(SynonymsFilePath);
+                synonymDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            }
+            synonyms = new Synonyms(synonymDictionary);
+
+            return synonyms;
         }
     }
 }

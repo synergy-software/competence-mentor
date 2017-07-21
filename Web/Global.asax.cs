@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Model.Competence.Domain;
 using Model.Competence.Infrastructure;
 using Model.Infrastructure;
 
@@ -22,6 +23,7 @@ namespace Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             CommandStore.DatabasePath = Server.MapPath("~/App_Data/");
+            Factory.SynonymsFilePath = Server.MapPath("~/App_Data/synonyms.db");
         }
     }
 }

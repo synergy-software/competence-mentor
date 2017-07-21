@@ -12,7 +12,7 @@ namespace Model.Competence.Infrastructure
         {
             CommandStore.AppendToStream(aggregate.GetId(), command, Commands.CompetenceUpdateCommandType);
             
-            ChartFactory.Get().UserCompetenceChange(command);
+            Factory.GetChartManager().UserCompetenceChange(command);
         }
     }
 
