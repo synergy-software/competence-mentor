@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Model.Competence.Infrastructure;
+using Model.Infrastructure;
 
 namespace Web
 {
@@ -20,7 +21,7 @@ namespace Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            UserCompentencePersister.Path = Server.MapPath("~/App_Data/");
+            CommandStore.DatabasePath = Server.MapPath("~/App_Data/");
         }
     }
 }
