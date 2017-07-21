@@ -12,6 +12,13 @@ namespace Model.Competence.Infrastructure
 
         public void Store(UserCompetence aggregate, CompetenceUpdateCommand command)
         {
+            StoreInLocalStorage(aggregate, command);
+
+            //tutaj
+        }
+
+        private static void StoreInLocalStorage(UserCompetence aggregate, CompetenceUpdateCommand command)
+        {
             var aggregateId = aggregate.GetId();
             var envelope = new CommandEnvelope(aggregateId, command);
 
