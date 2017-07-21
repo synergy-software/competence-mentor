@@ -31,7 +31,7 @@ namespace Web.Tests.Controllers
             ValuesController controller = new ValuesController();
 
             // Act
-            string result = controller.Get(5);
+            string result = controller.Get("user1");
 
             // Assert
             Assert.AreEqual("value", result);
@@ -56,7 +56,7 @@ namespace Web.Tests.Controllers
             ValuesController controller = new ValuesController();
 
             // Act
-            controller.Put(5, "value");
+            controller.Put("User1", "mój tekst #kompoent");
 
             // Assert
         }

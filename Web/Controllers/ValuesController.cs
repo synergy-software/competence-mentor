@@ -16,9 +16,9 @@ namespace Web.Controllers
         }
 
         // GET api/values/5
-        public string Get(string id)
+        public string Get(string userId)
         {
-            return "value" + id;
+            return "tekst #kompetencja1";
         }
 
         // POST api/values
@@ -27,7 +27,7 @@ namespace Web.Controllers
         }
 
         // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(string userId, string compentenceText)
         {
         }
 
