@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Competence\Domain\IUserCompentencePersister.cs" />
+    <Compile Include="Competence\Infrastructure\UserCompentencePersister.cs" />
     <Compile Include="Competence\Domain\UserCompetence.cs" />
     <Compile Include="Competence\Infrastructure\UserCompetenceRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

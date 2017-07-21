@@ -29,14 +29,14 @@ namespace Model.Competence.Domain
             return state.compentenceText;
         }
 
-        class State
+        internal class State
         {
-            public string userId;
+            public string Id;
             public string compentenceText;
 
             public State(string userId)
             {
-                userId = this.userId;
+                this.Id = userId;
                 compentenceText = "";
             }
 
