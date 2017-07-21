@@ -11,8 +11,9 @@ namespace Model.Competence.Infrastructure
         public void Store(UserCompetence aggregate, CompetenceUpdateCommand command)
         {
             CommandStore.AppendToStream(aggregate.GetId(), command, Commands.CompetenceUpdateCommandType);
-
-            //tutaj
+            
+            // todo faktory
+            new ChartManager().UserCompetenceIncrease(aggregate, command);
         }
     }
 

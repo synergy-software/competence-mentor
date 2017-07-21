@@ -17,7 +17,7 @@ namespace Web.Controllers
             return new UserCompetenceGetModel
             {
                 CompetenceText = "tekst #kompetencja1 #kompetencja2",
-                Competencies = new[] {"#kompetencja1 #kompetencja2"}
+                Competencies = new[] {"kompetencja1", "kompetencja2"}
             };
         }
 
