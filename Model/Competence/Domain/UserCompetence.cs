@@ -24,14 +24,10 @@ namespace Model.Competence.Domain
 
         public void UpdateCompentence(CompetenceUpdateCommand command)
         {
-            // todo parse
+            var parser = new UserCompetenceParser();
+            command.Competencies = parser.ParseCompetenceText(command.CompentenceText);
             state.Apply(command);
             userCompentencePersister.Store(this, command);
-        }
-
-        public string GetCompetenceText()
-        {
-            return state.compentenceText;
         }
 
         internal class State
@@ -55,5 +51,6 @@ namespace Model.Competence.Domain
     public class CompetenceUpdateCommand
     {
         public string CompentenceText { get; set; }
+        public string[] Competencies { get; set; }
     }
 }
