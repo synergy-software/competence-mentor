@@ -45,6 +45,10 @@ Vue.component('aggregations', {
         .style("fill", function(d) { return color(d.Count); })
         .on("click", function(d){
           that.$emit("selectcompetence", d.Competence);          
+        }).append("svg:title")
+      .text(function(d, i) { 
+
+            return d.Count; 
         });
 
     //format the text for each bubble
