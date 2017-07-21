@@ -12,4 +12,6 @@ namespace Model.Competence.Infrastructure
 
         }
     }
+
+    //public class CommandEnvelope
 }
