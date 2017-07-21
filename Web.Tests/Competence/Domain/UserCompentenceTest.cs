@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.Competence.Domain;
+using Model.Competence.Infrastructure;
 
 namespace Web.Tests.Competence.Domain
 {
@@ -9,7 +10,8 @@ namespace Web.Tests.Competence.Domain
         [TestMethod]
         public void UpdateAndRead()
         {
-            var entity = new UserCompetence("user1", new UserCompentencePersister());
+            var repository = new UserCompetenceRepository();
+            var entity = repository.Get("user1");
             entity.UpdateCompentence( new CompentenceUpdateCommand
             {
                 CompentenceText = "lala"
