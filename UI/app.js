@@ -1,5 +1,6 @@
 var apiRoot = "http://localhost:2392/api/";
 var userId = "cepi";
+var defaultSearch = ""; //:)
 Vue.component('aggregations', {
   template:'#Aggregations',
     mounted: function(){
@@ -63,23 +64,24 @@ Vue.component('aggregations', {
 });
 
 Vue.component('search', {
-  template:'#Search',
-  props:["term"],
+  template:'#Search',  
   data:function(){
-   
-    return {
+   var state = {
       results:[
        
       ],
-     // term:"",
+      term:defaultSearch,
       showNoResults:false     
     };
+    defaultSearch = "";
+    return state;
   },
   mounted:function(){
     if(this.term!="")
       {
         this.search();
       }
+      Materialize.updateTextFields();
   },
   methods:{
     search:function(){
@@ -107,6 +109,9 @@ Vue.component('profile', {
       message: '',
       competences: []
     };
+  },
+  updated:function(){
+     Materialize.updateTextFields();
   },
   methods: {
     update: function () {
@@ -159,7 +164,7 @@ var app = new Vue({
   },
   methods:{
      search:function(term){
-       this.defaultTerm = term;
+       defaultSearch = term;
        this.showSearch();
     },
     showProfile:function(){
