@@ -94,7 +94,7 @@
     <Compile Include="Competence\Domain\UserCompentenceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="Controllers\ValuesControllerTest.cs" />
+    <Compile Include="Controllers\CompentenceControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
